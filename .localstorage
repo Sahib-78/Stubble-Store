@@ -1,0 +1,18 @@
+function saveOrder() {
+    let name = document.getElementById("name").value;
+    let email = document.getElementById("email").value;
+    let quantity = document.getElementById("quantity").value;
+    let contact = document.getElementById("contact").value;
+
+    if (name && email && quantity && contact) {
+        // Save all four fields to localStorage
+        localStorage.setItem("name", name);
+        localStorage.setItem("email", email);
+        localStorage.setItem("quantity", quantity);
+        localStorage.setItem("contact", contact);
+        
+        window.location.href = "confirm.html";  // Proceed to the confirmation page
+    } else {
+        alert("Please fill in all fields.");
+    }
+}

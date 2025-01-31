@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Confirm Order</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            padding: 50px;
+        }
+        h1 {
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+        #orderDetails {
+            font-size: 1.2rem;
+            margin: 20px 0;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            width: 50%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 1.2rem;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+    </style>
+    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
+</head>
+<body>
+    <h1>Confirm Your Order</h1>
+    <p id="orderDetails"></p>
+    <button onclick="sendEmail()">Confirm Order</button>
+
+    <script>
+        // Initialize EmailJS
+        (function(){
+            emailjs.init("_rvbYVPrYrHsIk9KZ"); // Your EmailJS User ID
+        })();
+
+        // Retrieve order details from localStorage
+        let name = localStorage.getItem("name");
+        let quantity = localStorage.getItem("quantity");
+        let contact = localStorage.getItem("contact");
+
+        document.getElementById("orderDetails").innerText = 
+            `Name: ${name}\nQuantity: ${quantity}\nContact: ${contact}`;
+
+        function sendEmail() {
+            let templateParams = {
+                name: name,
+                quantity: quantity,
+                contact: contact
+            };
+
+            emailjs.send("service_n1v915h", "template_ifjlt9j", templateParams)
+                .then(response => {
+                    alert("Order confirmed! Check your email.");
+                    localStorage.clear();
+                    window.location.href = "thankyou.html";
+                }, error => {
+                    alert("Error sending email: " + error.text);
+                });
+        }
+    </script>
+</body>
+</html>
